@@ -1,0 +1,60 @@
+
+//- Generate facebook post text from product details, discounts, name and description
+
+
+
+
+//- What this does is it outputs the possible locations wheere the product can be bought from. The command mixin, is simillar to a function in python, it acts as a block that can be called. 
+//- Eachz is said to be simillar to a foreach loop and iterated through the colours. The seperator function tells the program that it needs to add a comma between colours, and 
+//- the last seperator dictates that the last seperator has to be 'and'. end is to print a fullstop at the end. 
+mixin locations
+  | the product is #[+syn('shelved', 'stocked', 'available')]
+  | at
+  eachz location in pricing.locations with { separator:',', last_separator:'and', end:'.' }
+    | #{location}
+
+//- synz is a way in order to choose from multiple types of sentance synonyms. It is an overarching type for syn. 
+  
+mixin intro
+  synz
+    syn
+      | the #{pricing.name} is really a fantastic product .
+    syn
+      | i really love the new #{pricing.name}.
+    syn
+      | #{pricing.name} : a great buy !
+
+//- creates a mixin, which uses itemz. while synz will choose one of the criteria below, what itemz will do it it will list all of the criteria below. 
+//- What begin with general does is it make sure there is the same starting each time. 
+//- mix:true at the end of the itemz description will make the display order random. 
+mixin display
+  itemz { begin_with_general: 'the pricing details are:', separator:',', last_separator:'after' }
+    item
+      | it has a price of #[+value(pricing.pricing)] dollars
+    item
+      | a #[+syn('huge', 'massive', 'whopping')] #[+syn('discount', 'sale', 'offer')] of #[+value(pricing.discount)] dollars
+
+
+//- Creates mixin called pricing chunks. Contains two other mixins called colours and display seperated by fullstops and mixed to provide variation. 
+mixin pricing_chunks
+  itemz {separator: '.', end:'.', mix:true}
+    item
+      | #[+locations]
+    item
+      | #[+display]
+    item
+      | this product has #{pricing.description} 
+
+
+//- combines intro and pricing_chunk funcitons. 
+mixin priced
+  | #[+intro] .
+  | #[+pricing_chunks]  .
+
+
+
+- let pricing;
+each pricingElt in pricings
+  - pricing = pricingElt;
+  p #[+priced]
+
