@@ -51,10 +51,5 @@ mixin priced
   | #[+intro] .
   | #[+pricing_chunks]  .
 
-
-
-- let pricing;
-each pricingElt in pricings
-  - pricing = pricingElt;
-  p #[+priced]
+p #[+priced]
 
