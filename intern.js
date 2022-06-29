@@ -3,6 +3,7 @@
 // Declares the variable that are used to iterate through the array
 let request = "iPhone SE (2nd Gen)"
 let number  = 0
+let flag = false
 
 //calls the rosaenlg library
 const rosaenlgPug = require('rosaenlg');
@@ -34,16 +35,23 @@ let pricings = [
   ];
 
 
-  for (index = 0; index < pricings.length; index++) {
-    if (pricings[index].name = request) {
-    number = index;
-    }
+for (index = 0; index < pricings.length; index++) {
+  if (pricings[index].name == request) {
+  number = index;
+  flag = true
+  }
 }
 
+if(flag == true){
 //calls the tuto.pug
 let res = rosaenlgPug.renderFile('intern.pug', {
-    language: 'en_US',
-    pricing: pricings[number],
-    cache: true,
-  });
-  console.log(res);
+  language: 'en_US',
+  pricing: pricings[number],
+  cache: true,
+});
+console.log(res);
+}
+
+if(flag == false){
+  console.log("The input you have entered is not available")
+}
