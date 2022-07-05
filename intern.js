@@ -6,6 +6,7 @@ let flag = false
 
 //calls the rosaenlg library
 const rosaenlgPug = require('rosaenlg');
+var natural = require('natural');
 
 //This is the initial input which is used in order to generate the caption
 let pricings = [
@@ -36,10 +37,10 @@ let pricings = [
 
 
 // Using Your Saved Classifier
-var natural = require('natural');
+
 
 natural.BayesClassifier.load('nvclassifier.json',null,function(err,classifier){
-    let request = classifier.classify("Where can I get a new Asus ROG");
+    let request = classifier.classify("Why should I buy the Acer Swift");
     for (index = 0; index < pricings.length; index++) {
       if (pricings[index].name == request) {
       number = index;

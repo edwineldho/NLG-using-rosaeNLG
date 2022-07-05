@@ -9,7 +9,7 @@
 //- the last seperator dictates that the last seperator has to be 'and'. end is to print a fullstop at the end. 
 mixin locations
   | the product is #[+syn('shelved', 'stocked', 'available')]
-  | at
+  | at 
   eachz location in pricing.locations with { separator:',', last_separator:'and', end:'.' }
     | #{location}
 
